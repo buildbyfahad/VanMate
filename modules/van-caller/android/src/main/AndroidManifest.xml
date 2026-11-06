@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-permission android:name="android.permission.CALL_PHONE" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <!-- Only to read how long each call lasted, so the driver sees who answered. -->
+  <uses-permission android:name="android.permission.READ_CALL_LOG" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <!-- Needed to place calls at an exact minute. Android 12 grants SCHEDULE_EXACT_ALARM by default;
+       Android 13+ grants USE_EXACT_ALARM automatically. -->
+  <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+  <application>
+    <receiver android:name="expo.modules.vancaller.CallAlarmReceiver" android:exported="false" />
+    <receiver android:name="expo.modules.vancaller.BootReceiver" android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>
